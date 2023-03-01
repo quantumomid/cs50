@@ -4,6 +4,8 @@
 // function prototypes - to let compiler know
 int get_height(void);
 void print_grid(int size);
+void print_spaces(int count);
+void print_hashes(int count);
 
 int main(void)
 {
@@ -34,18 +36,28 @@ void print_grid(int size)
     for (int i = 0; i < size; i++)
     {
         // print spaces before '#' symbols
-        for (int j = 0; j < size - i; j++)
-        {
-            printf(" ");
-        }
+        print_spaces(size - i);
 
         // print '#' symbols
-        for (int j = 0; j < i + 1; j++)
-        {
-            printf("#");
-        }
-        
+        print_hashes(i+1);
+
         // move to next line after each row is printed
         printf("\n");
+    }
+}
+
+void print_spaces(int count)
+{
+    for (int j = 0; j < count; j++)
+    {
+        printf(" ");
+    }
+}
+
+void print_hashes(int count)
+{
+    for (int k = 0; k < count; k++)
+    {
+        printf("#");
     }
 }
