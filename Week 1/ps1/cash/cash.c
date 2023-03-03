@@ -14,18 +14,22 @@ int main(void)
 
     // Calculate the number of quarters to give the customer
     int quarters = calculate_quarters(cents);
+    printf("QUARTERS %i\n", quarters); // For debugging REMOVE AT END
     cents = cents - quarters * 25;
 
     // Calculate the number of dimes to give the customer
     int dimes = calculate_dimes(cents);
+    printf("dimes %i\n", dimes); // For debugging REMOVE AT END
     cents = cents - dimes * 10;
 
     // Calculate the number of nickels to give the customer
     int nickels = calculate_nickels(cents);
+    printf("nickels %i\n", nickels); // For debugging REMOVE AT END
     cents = cents - nickels * 5;
 
     // Calculate the number of pennies to give the customer
     int pennies = calculate_pennies(cents);
+    printf("pennies %i\n", pennies); // For debugging REMOVE AT END
     cents = cents - pennies * 1;
 
     // Sum coins
@@ -37,30 +41,38 @@ int main(void)
 
 int get_cents(void)
 {
-    // TODO
-    return 0;
+    int n;
+
+    // Validation to ensure user doesn't return a negative value
+    do
+    {
+        n = get_int("How many cents are you owed? \n");
+    } while (n < 0);
+
+    return n;
 }
 
 int calculate_quarters(int cents)
 {
-    // TODO
-    return 0;
+    // We return the integer of how many times 25 goes into the cents argument
+    int no_of_quarters = cents / 25;
+    return no_of_quarters;
 }
 
 int calculate_dimes(int cents)
 {
-    // TODO
-    return 0;
+    int no_of_dimes = cents / 10;
+    return no_of_dimes;
 }
 
 int calculate_nickels(int cents)
 {
-    // TODO
-    return 0;
+    int no_of_nickels = cents / 5;
+    return no_of_nickels;
 }
 
 int calculate_pennies(int cents)
 {
-    // TODO
-    return 0;
+    // Just need to return the number of cents since a penny is 1c
+    return cents;
 }
