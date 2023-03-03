@@ -14,29 +14,29 @@ int main(void)
 
     // Calculate the number of quarters to give the customer
     int quarters = calculate_quarters(cents);
-    printf("QUARTERS %i\n", quarters); // For debugging REMOVE AT END
+    printf("Number of Quarters returned: %i\n", quarters);
     cents = cents - quarters * 25;
 
     // Calculate the number of dimes to give the customer
     int dimes = calculate_dimes(cents);
-    printf("dimes %i\n", dimes); // For debugging REMOVE AT END
+    printf("Number of Dimes returned: %i\n", dimes);
     cents = cents - dimes * 10;
 
     // Calculate the number of nickels to give the customer
     int nickels = calculate_nickels(cents);
-    printf("nickels %i\n", nickels); // For debugging REMOVE AT END
+    printf("Number of Nickels returned: %i\n", nickels);
     cents = cents - nickels * 5;
 
     // Calculate the number of pennies to give the customer
     int pennies = calculate_pennies(cents);
-    printf("pennies %i\n", pennies); // For debugging REMOVE AT END
+    printf("Number of Pennies returned: %i\n", pennies);
     cents = cents - pennies * 1;
 
     // Sum coins
     int coins = quarters + dimes + nickels + pennies;
 
     // Print total number of coins to give the customer
-    printf("%i\n", coins);
+    printf("Total number of all coins returned is therefore: %i\n", coins);
 }
 
 int get_cents(void)
