@@ -1,3 +1,4 @@
+// MY solution
 #include <cs50.h>
 #include <stdio.h>
 
@@ -5,81 +6,86 @@ int main(void)
 {
     long user_credit_number;
 
-    // Validation to ensure user doesn't return a negative value
+    // Prompt user for credit card number and ensure non-negative input
     do
     {
         user_credit_number = get_long("What is your credit card number? \n");
     } while (user_credit_number < 0);
 
-    // Using the fact that taking the module%10 gives last digit and
-    // dividing\10 takes off the last digit
-    // Note edge case of credit card starting with '0's ignores these
+    // Iterate through digits of credit card number
+    // and compute sum of digits to determine if valid
     int cc_length = 0;
     long cc = user_credit_number;
-    // The role of this boolean variable is to indicate whether this is a number to double or not
-    bool isDouble = false;
+    bool isDouble = false; // flag for whether to double the next digit
     int sum_of_doubled_numbers = 0;
     int sum_of_other_numbers = 0;
     while (cc > 0)
     {
-        int last_digit = cc % 10; // Last digit of current cc value
-        printf("last_digit %i: \n", last_digit);
+        int last_digit = cc % 10; // Get the rightmost digit
 
-        // In the case of doubled, we only add the INDIVIDUAL digits therefore
-        // need to take care when the last digit doubles is two digits
+        // If current digit is one that should be doubled
         if (isDouble == true)
         {
             int last_digit_doubled = last_digit * 2;
-            int isDoubleDigit = (last_digit_doubled / 10) != 0; // We can be sure that multiple of any one digit by 2 will never yield more than two, i.e. double, digits
-            if (isDoubleDigit)
+
+            // If doubling creates two digits, add them individually
+            if (last_digit_doubled >= 10)
             {
-                int first_digit = last_digit_doubled % 10;    // Technically this is the second digit of the two since modulo with 10 takes from the end
+                int first_digit = last_digit_doubled % 10; // second digit (from right)
+
                 last_digit_doubled = last_digit_doubled / 10; // To remove last digit
-                int second_digit = last_digit_doubled % 10;
+
+                int second_digit = last_digit_doubled % 10; // first digit (from right)
                 sum_of_doubled_numbers += first_digit + second_digit;
             }
             else
             {
                 sum_of_doubled_numbers += last_digit * 2;
             }
-            isDouble = false; // Flip isDouble
+
+            // Reset flag
+            isDouble = false;
         }
         else
         {
             sum_of_other_numbers += last_digit;
-            isDouble = true; // Flip isDouble
+            // Reset flag
+            isDouble = true;
         }
 
-        cc = cc / 10; // Divide by 10 so we lose the last digit on each iteration
-        cc_length++;  // Increment length on each iteration
+        // Remove rightmost digit from number
+        cc = cc / 10;
+
+        // Increment counter for number of digits processed
+        cc_length++;
     }
 
-    // Check card length and starting digits
-    printf("The number of digits in your credit card number is: %i \n", cc_length);
-
-    // Print AMEX, MASTERCARD, VISA or INVALID
+    // Determine if the credit card number is valid
     int total_sum = sum_of_doubled_numbers + sum_of_other_numbers;
     bool isValid = (total_sum % 10) == 0;
 
+    // Print results based on validity and type of credit card
     if (isValid)
     {
         printf("The credit card %li is Valid.\n", user_credit_number);
+
+        // Check length and first digits to determine type of card
         if (cc_length == 16)
         {
             int first_two_digits = user_credit_number / 100000000000000;
             int first_digit = first_two_digits / 10; // For VISA need first digit
             printf("First two digit of the credit card is: %i \n", first_two_digits);
 
-            if (first_two_digits == 51 || first_two_digits == 52 || first_two_digits == 53 || first_two_digits == 54 || first_two_digits == 55)
+            if (first_two_digits >= 51 && first_two_digits <= 55)
             {
                 printf("MASTERCARD \n");
             }
-            if (first_digit == 4)
+            else if (first_digit == 4)
             {
                 printf("VISA \n");
             }
         }
-        if (cc_length == 13)
+        else if (cc_length == 13)
         {
             int first_digit = user_credit_number / 100000000000; // For VISA need first digit
             printf("First digit of the credit card is: %i \n", first_digit);
@@ -89,7 +95,7 @@ int main(void)
                 printf("VISA \n");
             }
         }
-        if (cc_length == 15)
+        else if (cc_length == 15)
         {
             int first_two_digits = user_credit_number / 10000000000000;
             printf("First two digit of the credit card is: %i \n", first_two_digits);
