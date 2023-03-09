@@ -29,7 +29,6 @@ int main(void)
     check_card_type(first_two_digits);
 }
 
-
 // -------------------------------------------------------------------
 // HELPER FUNCTIONS
 // -------------------------------------------------------------------
@@ -132,12 +131,12 @@ int check_card_type(int first_two_digits)
     int second_digit = first_two_digits % 10;
 
     // Next check starting digits for card type
-    if ((first_digit == 5) && (0 < first_digit && second_digit < 6))
+    if (50 < first_two_digits && first_two_digits < 56)
     {
         printf("MASTERCARD\n");
         return 1;
     }
-    else if ((first_digit == 3) && (second_digit == 4 || second_digit == 7))
+    else if (first_two_digits == 34 || first_two_digits == 37)
     {
         printf("AMEX\n");
         return 1;
